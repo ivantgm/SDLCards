@@ -1,5 +1,5 @@
 #define SDL_MAIN_HANDLED
-#include "cacheta.hpp"
+#include "paciencia.hpp"
 #include "exception.hpp"
 
 const int SCREEN_WIDTH = 800;
@@ -7,8 +7,8 @@ const int SCREEN_HEIGHT = 600;
 
 int main() {
     try {
-        Cacheta cacheta = Cacheta();
-        cacheta.loop();        
+        Paciencia paciencia = Paciencia();
+        paciencia.loop();        
     } catch(const Exception& e) {
         e.show();
         return -1;

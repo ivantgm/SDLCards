@@ -54,6 +54,7 @@ protected:
         );
     Card *add_card(int card_id, int x, int y);
     CardGroup *add_card_group(CardGroupDirection direction);
+    CardGroup *add_card_group(void);
     Render *get_render_at(int x, int y);
 private:
     SDL_Window* window; 

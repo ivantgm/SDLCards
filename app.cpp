@@ -208,8 +208,15 @@ Card *App::add_card(int card_id, int x, int y) {
     return p;    
 }
 
+//-----------------------------------------------------------------------------
 CardGroup *App::add_card_group(CardGroupDirection direction) {
     CardGroup *p = new CardGroup(this, direction);
+    renders.push_back(p);
+    return p;    
+}
+//-----------------------------------------------------------------------------
+CardGroup *App::add_card_group(void) {
+    CardGroup *p = new CardGroup(this);
     renders.push_back(p);
     return p;    
 }

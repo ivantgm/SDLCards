@@ -10,7 +10,7 @@ images = ['000.png','011.png','012.png','013.png','014.png','021.png','022.png',
 
 
 for i in images:
-        my_resize(i, 120, 180)
+        my_resize(i, 100, 150)
         
         
         

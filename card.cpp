@@ -7,13 +7,22 @@ Card::Card(App *app, int card_id, int x, int y)
     
     void (*event_click)(Render*) = [](Render *r) {
         Card *c = dynamic_cast<Card*>(r);
-        if(c) {            
-            if(c->get_enabled()) {
-                c->set_selected(!c->get_selected());
-            }            
+        if(c) {
+            bool can_select;            
+            c->before_select(can_select);
+            if(can_select) {
+                if(c->get_enabled()) {
+                    c->set_selected(!c->get_selected());
+                }
+            }
         }
     };
     this->card_id = card_id;
+    if(card_id) {
+        card_face = FACE_UP;
+    } else {
+        card_face = FACE_DOWN;
+    }
     on_mouse_click = event_click;
     set_animated(false);
     set_enabled(true);
@@ -24,7 +33,7 @@ Card::Card(App *app, int card_id, int x, int y)
 string Card::determine_file_name(int card_id) {
     char s[32];
     sprintf(s, "%03d", card_id);
-    return "./img/120x180/" + string(s) + ".png";
+    return "./img/100x150/" + string(s) + ".png";
 }
 
 //-----------------------------------------------------------------------------
@@ -41,6 +50,24 @@ void Card::set_animated(bool animated) {
 bool Card::get_animated(void) const {
     return animated;
 }
+
+//-----------------------------------------------------------------------------
+void Card::set_card_face(CardFace card_face) {
+    if(get_card_id()) {
+        if(card_face == FACE_DOWN) {
+            change_image(determine_file_name(0));
+        } else {
+            change_image(determine_file_name(get_card_id()));
+        }        
+        this->card_face = card_face;
+    }    
+}
+
+//-----------------------------------------------------------------------------
+CardFace Card::get_card_face(void) const {
+    return card_face;
+}
+
 
 //-----------------------------------------------------------------------------
 void Card::set_enabled(bool enabled) {
@@ -77,6 +104,11 @@ void Card::set_card_id(int card_id) {
     change_image(determine_file_name(card_id));
     set_selected(get_selected());
     this->card_id = card_id;
+    if(card_id) {
+        card_face = FACE_UP;
+    } else {
+        card_face = FACE_DOWN;
+    }    
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +134,47 @@ void Card::set_xy(int x, int y) {
 }
 
 //-----------------------------------------------------------------------------
+void Card::before_select(bool &can_select) {
+    can_select = true;
+}
+
+//-----------------------------------------------------------------------------
+bool Card::ouros(void) const {
+    return naipe(OUROS);
+}
+
+//-----------------------------------------------------------------------------
+bool Card::espadas(void) const {
+    return naipe(ESPADAS);
+}
+
+//-----------------------------------------------------------------------------
+bool Card::copas(void) const {
+    return naipe(COPAS);
+}
+
+//-----------------------------------------------------------------------------
+bool Card::paus(void) const {
+    return naipe(PAUS);
+}
+
+//-----------------------------------------------------------------------------
+bool Card::naipe(Naipe naipe) const {
+    int id = get_card_id();
+    if(id) {
+        return (id%10)==naipe;
+    } else {
+        return false;
+    }
+}
+
+//-----------------------------------------------------------------------------
 //- CardGroup -----------------------------------------------------------------
+//-----------------------------------------------------------------------------
+CardGroup::CardGroup(App *app) 
+    : Grid(app, 0, 0, 0, 0, 0, 0, 0, 0, SDL_Color()) {
+    this->direction = Vertical;
+}
 //-----------------------------------------------------------------------------
 CardGroup::CardGroup(App *app, CardGroupDirection direction) 
     : Grid(app, 0, 0, 18, 24, 0, 0, 0, 0, SDL_Color()) {
