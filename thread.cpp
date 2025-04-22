@@ -1,6 +1,8 @@
 #include "thread.hpp"
 #include <SDL2/SDL.h>
 
+namespace SDLCards {
+
 //-----------------------------------------------------------------------------
 Thread::Thread(const string& name, bool auto_free) {
     this->name = name;
@@ -31,3 +33,5 @@ int Thread::on_execute(void) {
 void Thread::on_terminate(void) {
     // não faz nada
 }
+
+} // namespace SDLCards

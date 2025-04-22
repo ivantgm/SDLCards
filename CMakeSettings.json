@@ -1,0 +1,22 @@
+﻿{
+    "configurations": [
+        {
+            "buildRoot": "${projectDir}\\build\\${name}",
+            "configurationType": "Debug",
+            "environment": {
+                "VCPKG_ROOT": "C:\\dev\\vcpkg"
+            },
+            "generator": "Ninja",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "name": "x64-Debug",
+            "toolchainFile": "C:\\dev\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+        },
+        {
+            "buildRoot": "${projectDir}\\build\\${name}",
+            "name": "x64-Release",
+            "generator": "Ninja",
+            "configurationType": "Release",
+            "inheritEnvironments": [ "x64-Debug", "msvc_x64_x64" ]
+        }
+    ]
+}

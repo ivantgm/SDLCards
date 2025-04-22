@@ -3,6 +3,8 @@
 
 #include "app.hpp"
 
+namespace SDLCards {
+
 class Cacheta: public App {
 public:
     Cacheta();
@@ -10,5 +12,7 @@ public:
     void poll_event(SDL_Event *e);
 private:
 };
+
+} // namespace SDLCards
 
 #endif

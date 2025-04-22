@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <fstream> 
 
+namespace SDLCards {
+
 const string GAME_PACIENCIA = "1";
 const string TIPO_NEW_GAME  = "1";
 const string TIPO_PEGAMONTE = "2";
@@ -694,3 +696,4 @@ void PacienciaCard::before_select(bool &can_select) {
     
 }
 
+} // namespace SDLCards

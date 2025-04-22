@@ -8,6 +8,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+namespace SDLCards {
+
 using namespace std;
 
 class App;
@@ -236,5 +238,7 @@ private:
     void inc_spin(void);
     void dec_spin(void);
 };
+
+} // namespace SDLCards
 
 #endif

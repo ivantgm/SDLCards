@@ -4,6 +4,8 @@
 #include "render.hpp"
 #include "thread.hpp"
 
+namespace SDLCards {
+
 enum CardGroupDirection {
     Vertical,
     Horizontal
@@ -105,5 +107,7 @@ private:
     int duration_miliseconds;   
     int xf, yf, xi, yi;
 };
+
+} // namespace SDLCards
 
 #endif

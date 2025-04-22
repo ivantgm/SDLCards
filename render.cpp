@@ -6,6 +6,8 @@
 #include <limits>
 #include <functional>
 
+namespace SDLCards {
+
 using namespace std;
 
 void inflate_rect(SDL_Rect &rect, int amount) {
@@ -796,6 +798,7 @@ Render *Grid::add_render(int col, int row, Render *render) {
     return render;
 }
 
+static constexpr int HH = 12;
 
 //-----------------------------------------------------------------------------
 //- Spin ----------------------------------------------------------------------
@@ -835,7 +838,6 @@ Spin::Spin(App *app, const string &ttf_file_name, int x, int y,
 
     text_rect.w = max_w;
 
-    const int HH = 12;
     points_up = {
         {0, HH}, 
         {text_rect.w/2, 0}, 
@@ -1010,4 +1012,4 @@ void Spin::set_value(int value) {
     spin = value*100;
 }
 
-
+} // namespace SDLCards

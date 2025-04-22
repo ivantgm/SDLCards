@@ -3,6 +3,8 @@
 
 #include <string>
 
+namespace SDLCards {
+
 using namespace std;
 
 class Exception {    
@@ -13,5 +15,7 @@ private:
     string msg;
     string error;
 };
+
+} // namespace SDLCards
 
 #endif

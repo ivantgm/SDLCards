@@ -1,5 +1,7 @@
 #include "cacheta.hpp"
 
+namespace SDLCards {
+
 //-----------------------------------------------------------------------------
 Cacheta::Cacheta() : App("Cacheta 1.0", 800, 600) {
 
@@ -102,3 +104,4 @@ void Cacheta::poll_event(SDL_Event *e) {
     App::poll_event(e);
 }
 
+} // namespace SDLCards

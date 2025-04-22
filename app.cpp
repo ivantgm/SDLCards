@@ -11,6 +11,8 @@
 
 #include <curl/curl.h>
 
+namespace SDLCards {
+
 string App::save_path = "";
 string App::url = "https://miliogo.com";
 //string App::url = "http://localhost/miliogo";
@@ -662,3 +664,5 @@ void App::render_alert_window(void) {
     ImGui::End();
 
 }
+
+} // namespace SDLCards

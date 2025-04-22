@@ -3,6 +3,8 @@
 
 #include "app.hpp"
 
+namespace SDLCards {
+
 typedef vector<CardGroup*> Cols;
 typedef vector<int> Baralho;
 
@@ -70,5 +72,7 @@ public:
 protected:
     void before_select(bool &can_select);
 };
+
+} // namespace SDLCards
 
 #endif

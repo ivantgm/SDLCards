@@ -3,6 +3,8 @@
 
 #include <string>
 
+namespace SDLCards {
+
 using namespace std;
 
 class Thread {    
@@ -16,5 +18,7 @@ private:
     string name;
     bool auto_free;
 };
+
+} // namespace SDLCards
 
 #endif

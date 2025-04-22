@@ -9,6 +9,8 @@
 #include "render.hpp"
 #include "card.hpp"
 
+namespace SDLCards {
+
 using namespace std;
 
 class Animate {
@@ -99,5 +101,7 @@ private: // IMGUI
     void render_login_window(void);
     void render_alert_window(void);
 };
+
+} // namespace SDLCards
 
 #endif
