@@ -32,6 +32,7 @@ public:
     Render *link;
     SDL_Color color;
     string name;
+    int tag;
     virtual void render(void) = 0;
     virtual void set_x(int x) = 0;
     virtual void set_y(int y) = 0;
@@ -76,9 +77,12 @@ public:
     void rotate(double angle);
     void inc_rotate(double inc_angle);
     void change_image(const string& file_name);
+    void change_text(const string& text);
 private:
     SDL_Texture* texture;
     double rotate_angle;
+    string ttf_file_name;
+    int font_size;
 };
 
 class Rectangle : public Render {

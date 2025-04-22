@@ -21,6 +21,7 @@ public:
     vector<Spin*> spins_rand_seed;
     Spin *spin_dificult;
     SaveData save_data;
+    Texture *score;
     const string FONTFILE = "./VT323-Regular.ttf";
     int pop_baralho(void);
     void new_game(void);
@@ -37,6 +38,7 @@ private:
     const int ch = 150;
     const int dist = 12;
     const int ghost_alpha = 32;
+    int move_count;    
     string config_file;
     Baralho baralho;   
     CardGroup *casa_ouros;

@@ -12,7 +12,8 @@
 #include <curl/curl.h>
 
 string App::save_path = "";
-string App::url = "http://localhost/miliogo";
+string App::url = "https://miliogo.com";
+//string App::url = "http://localhost/miliogo";
 
 //-----------------------------------------------------------------------------
 App::App(const string& window_caption, int width, int heigth) {

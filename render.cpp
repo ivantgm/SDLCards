@@ -122,6 +122,9 @@ Texture::Texture(App *app,
         int x, int y, const SDL_Color &color, int font_size) 
     : Render(app) {
     rotate_angle = 0;
+    this->ttf_file_name = ttf_file_name;
+    this->color = color;
+    this->font_size = font_size;
     TTF_Font* font = TTF_OpenFont(ttf_file_name.c_str(), font_size);
     if(!font) {
         throw Exception("Não foi possível carregar a fonte " + ttf_file_name, TTF_GetError());    
@@ -194,10 +197,12 @@ void Texture::set_color(Uint8 r, Uint8 g, Uint8 b) {
 void Texture::rotate(double angle) {
     rotate_angle = angle;
 }
+
 //-----------------------------------------------------------------------------
 void Texture::inc_rotate(double inc_angle) {
     rotate_angle += inc_angle;
 }
+
 //-----------------------------------------------------------------------------
 void Texture::change_image(const string& file_name) {
     SDL_Surface* temp_surface = IMG_Load(file_name.c_str());
@@ -216,6 +221,24 @@ void Texture::change_image(const string& file_name) {
         throw Exception("Não foi possível criar a textura " + file_name, SDL_GetError());
     }
     SDL_FreeSurface(temp_surface);    
+}
+
+//-----------------------------------------------------------------------------
+void Texture::change_text(const string& text) {
+    TTF_Font* font = TTF_OpenFont(ttf_file_name.c_str(), font_size);
+    if(!font) {
+        throw Exception("Não foi possível carregar a fonte " + ttf_file_name, TTF_GetError());    
+    }
+    SDL_Surface* temp_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    if(!temp_surface) {
+        throw Exception("Não foi possível renderizar o texto " + text, TTF_GetError());
+    }
+    texture = SDL_CreateTextureFromSurface(app->get_window_renderer(), temp_surface);
+    if(!texture) {
+        throw Exception("Não foi possível criar a textura do texto " + text, SDL_GetError());
+    }
+    SDL_FreeSurface(temp_surface);
+    TTF_CloseFont(font);
 }
 
 //-----------------------------------------------------------------------------

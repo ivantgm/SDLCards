@@ -11,7 +11,7 @@ const string TIPO_TERMINOU  = "4";
 
 //-----------------------------------------------------------------------------
 Paciencia::Paciencia() : App("Paciência 1.0", 910, 700) {
-
+    
     config_file = App::save_path + "config.dat";
 
     ifstream f(config_file.c_str());
@@ -165,6 +165,7 @@ Texture *Paciencia::create_paciencia_button(const string& text, int x, int y, in
 //-----------------------------------------------------------------------------
 void Paciencia::new_game(void) {
     
+    move_count = 0;
     cols.clear();
     baralho.clear();
 
@@ -180,7 +181,11 @@ void Paciencia::new_game(void) {
 
     send_new_game();
 
-    Texture *button = add_paciencia_button("MENU", 640, 10, 120);
+    score = new Texture(this, FONTFILE, "000", 600, 10, {255, 255, 255}, 64);
+    score->tag = 0;
+    renders.push_back(score);
+
+    Texture *button = add_paciencia_button("MENU", 780, 10, 64);
     button->on_mouse_click = [](Render *r) {
         Paciencia *paciencia = dynamic_cast<Paciencia*>(r->app);
         paciencia->menu();
@@ -345,7 +350,12 @@ void Paciencia::casa_click(Naipe naipe) {
             }
 
             col->move_cards(selecteds, casa, -1, true);
-            send_move(col, selecteds, casa);
+            score->tag += pow(selecteds.size(), 2) * (save_data.dificult+1);
+            string score_string = to_string(score->tag);
+            score_string.insert(0, 3-score_string.size(), '0');
+            score->change_text(score_string);
+
+            send_move(col, selecteds, casa); 
 
             Cards cards = col->get_cards();
             if(!cards.empty()) {
@@ -532,6 +542,7 @@ void Paciencia::send_pega_monte(void) {
 
 //-----------------------------------------------------------------------------
 void Paciencia::send_move(const CardGroup *source, const Cards &selecteds, const CardGroup *dest) {
+    move_count++;    
     if(login_hash != "") {
         Headers headers;
         headers["hash"] = login_hash;
@@ -539,7 +550,12 @@ void Paciencia::send_move(const CardGroup *source, const Cards &selecteds, const
         headers["dificult"] = to_string(save_data.dificult);
         headers["tipo"] = TIPO_MOVE;
         headers["game"] = GAME_PACIENCIA;
-        string body = source->name + "," + dest->name + ":" + cards_to_string(selecteds);
+        string body = 
+          to_string(move_count) + "," + 
+          source->name + "," + 
+          dest->name + ":" + 
+          cards_to_string(selecteds)
+        ;
         request("game.php", headers, body, 
             [](App *app, long response_code, string response) {
                 if(response_code!=201) {
@@ -561,7 +577,7 @@ void Paciencia::send_terminou(void) {
         headers["dificult"] = to_string(save_data.dificult);
         headers["tipo"] = TIPO_TERMINOU;
         headers["game"] = GAME_PACIENCIA;
-        request("game.php", headers, "", 
+        request("game.php", headers, to_string(score->tag),
             [](App *app, long response_code, string response) {
                 if(response_code!=201) {
                     string msg("falha ao acessar servidor: ");
@@ -645,7 +661,7 @@ void PacienciaCard::before_select(bool &can_select) {
                     if(card->seq()+1 == seq()) {
 
                         col->move_cards(selecteds, this_group, -1, false);
-                        paciencia->send_move(col, selecteds, this_group);
+                        paciencia->send_move(col, selecteds, this_group);                        
 
                         for(auto card : selecteds) {
                             card->set_selected(false);
