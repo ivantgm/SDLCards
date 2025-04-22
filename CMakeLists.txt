@@ -48,7 +48,7 @@ if(WIN32)
         $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
     )
 elseif(LINUX)
-    target_link_libraries(SDLCards SDL2 SDL2_image SDL2_ttf)
+    target_link_libraries(SDLCards SDL2 SDL2_image SDL2_ttf curl)
 endif()
 
 target_include_directories(SDLCards PRIVATE imgui imgui/backends /usr/include/SDL2)
