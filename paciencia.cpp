@@ -2,6 +2,7 @@
 #include "exception.hpp"
 #include <algorithm>
 #include <fstream> 
+#include <random>
 
 namespace SDLCards {
 
@@ -176,8 +177,8 @@ void Paciencia::new_game(void) {
             baralho.push_back(v*10+n);
         }
     }    
-    srand(save_data.seed);
-    random_shuffle(baralho.begin(), baralho.end());    
+
+    shuffle(baralho.begin(), baralho.end(), default_random_engine(save_data.seed));
 
     delete_renders();
 
