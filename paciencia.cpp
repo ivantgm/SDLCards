@@ -178,7 +178,11 @@ void Paciencia::new_game(void) {
         }
     }    
     std::mt19937 rng(save_data.seed);
-    shuffle(baralho.begin(), baralho.end(), rng);
+    for (int i = baralho.size() - 1; i > 0; --i) {
+        std::uniform_int_distribution<> distrib(0, i); 
+        int j = distrib(rng);
+        std::swap(baralho[i], baralho[j]);
+    }    
 
     delete_renders();
 
