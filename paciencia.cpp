@@ -177,8 +177,8 @@ void Paciencia::new_game(void) {
             baralho.push_back(v*10+n);
         }
     }    
-
-    shuffle(baralho.begin(), baralho.end(), default_random_engine(save_data.seed));
+    std::mt19937 rng(save_data.seed);
+    shuffle(baralho.begin(), baralho.end(), rng);
 
     delete_renders();
 
