@@ -8,6 +8,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+namespace SDLCards {
+
 using namespace std;
 
 class App;
@@ -31,6 +33,8 @@ public:
     Render *owner;
     Render *link;
     SDL_Color color;
+    string name;
+    int tag;
     virtual void render(void) = 0;
     virtual void set_x(int x) = 0;
     virtual void set_y(int y) = 0;
@@ -75,9 +79,12 @@ public:
     void rotate(double angle);
     void inc_rotate(double inc_angle);
     void change_image(const string& file_name);
+    void change_text(const string& text);
 private:
     SDL_Texture* texture;
     double rotate_angle;
+    string ttf_file_name;
+    int font_size;
 };
 
 class Rectangle : public Render {
@@ -231,5 +238,7 @@ private:
     void inc_spin(void);
     void dec_spin(void);
 };
+
+} // namespace SDLCards
 
 #endif

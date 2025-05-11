@@ -1,6 +1,8 @@
 #include "card.hpp"
 #include "app.hpp"
 
+namespace SDLCards {
+
 //-----------------------------------------------------------------------------
 Card::Card(App *app, int card_id, int x, int y) 
      :Texture(app, determine_file_name(card_id), x, y) {
@@ -495,3 +497,4 @@ void ThreadMove::on_terminate(void) {
     card->set_xy(xf, yf);
 }
 
+} // namespace SDLCards

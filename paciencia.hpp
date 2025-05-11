@@ -3,6 +3,8 @@
 
 #include "app.hpp"
 
+namespace SDLCards {
+
 typedef vector<CardGroup*> Cols;
 typedef vector<int> Baralho;
 
@@ -15,23 +17,31 @@ class Paciencia: public App {
 public:
     Paciencia();
     ~Paciencia();
-    void poll_event(SDL_Event *e);
+    void poll_event(SDL_Event *e);    
 public:    
     Cols cols;
     vector<Spin*> spins_rand_seed;
     Spin *spin_dificult;
     SaveData save_data;
+    Texture *score;
     const string FONTFILE = "./VT323-Regular.ttf";
     int pop_baralho(void);
     void new_game(void);
     void menu(void);
-    void delete_render(const Render *render);    
+    void delete_render(const Render *render); 
+    string baralho_str(void) const;
+    string cards_to_string(const Cards &cards) const;
+    void send_new_game(void);
+    void send_pega_monte(void);
+    void send_move(const CardGroup *source, const Cards &selecteds, const CardGroup *dest);
+    void send_terminou(void);
 private:
     const int cw = 100;
     const int ch = 150;
     const int dist = 12;
     const int ghost_alpha = 32;
-    string save_path, config_file;
+    int move_count;    
+    string config_file;
     Baralho baralho;   
     CardGroup *casa_ouros;
     Card *casa_ouros_ghost;
@@ -62,5 +72,7 @@ public:
 protected:
     void before_select(bool &can_select);
 };
+
+} // namespace SDLCards
 
 #endif
