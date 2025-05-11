@@ -359,7 +359,7 @@ void Paciencia::casa_click(Naipe naipe) {
             col->move_cards(selecteds, casa, -1, true);
             score->tag += pow(selecteds.size(), 2) * (save_data.dificult+1);
             string score_string = to_string(score->tag);
-            score_string.insert(0, 3-score_string.size(), '0');
+            score_string.insert(0, 4-score_string.size(), '0');
             score->change_text(score_string);
 
             send_move(col, selecteds, casa); 
